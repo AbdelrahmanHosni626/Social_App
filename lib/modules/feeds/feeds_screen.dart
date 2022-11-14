@@ -1,304 +1,355 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:social_app/shared/styles/colors.dart';
+import '../../layout/cubit/cubit.dart';
+import '../../layout/cubit/states.dart';
+import '../../models/post/create_post_model.dart';
+import '../../shared/styles/colors.dart';
 
-class FeedsScreen extends StatelessWidget {
-  const FeedsScreen({Key? key}) : super(key: key);
 
+class FeedsScreen extends StatelessWidget
+{
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 5.0,
-            margin: const EdgeInsets.all(8.0),
-            child: Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                const Image(
-                  image: NetworkImage(
-                    'https://img.freepik.com/free-photo/happy-man-rides-scooter-shows-direction-away-points-thumb-right-blank-space-yellow-background-dressed-casual-wear-helmet-uses-headphones-has-cheerful-face-expression_273609-32476.jpg?size=626&ext=jpg&ga=GA1.2.263807918.1667467436&semt=sph',
+  Widget build(BuildContext context)
+  {
+    return BlocConsumer<SocialCubit, SocialStates>(
+      listener: (context, state) {},
+      builder: (context, state)
+      {
+        return ConditionalBuilder(
+          condition: SocialCubit.get(context).posts.isNotEmpty && SocialCubit.get(context).userModel != null,
+          builder: (context) => SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children:
+              [
+                Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  elevation: 5.0,
+                  margin: const EdgeInsets.all(
+                    8.0,
                   ),
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 200.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Communicate With your friends',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => buildCardItem(context),
-            separatorBuilder: (context, index) => const SizedBox(height: 10.0,),
-            itemCount: 5,
-          ),
-          const SizedBox(
-            height: 8.0,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildCardItem(context) => Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5.0,
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 25.0,
-                    backgroundImage: NetworkImage(
-                      'https://img.freepik.com/free-photo/sign-affection-admiration-pretty-curly-woman-presses-palms-heart-being-grateful-gift-wears-yellow-t-shirt-poses-rosy-wall-says-you-are-always-my-heart-smiles-gently_273609-42551.jpg?t=st=1668102528~exp=1668103128~hmac=45306a3f573783d3a3bb4b7c414241efc8216306688c718dac844da73f5a676a',
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: const [
-                            Text(
-                              'Abdelrahman Hosni',
-                              style: TextStyle(
-                                height: 1.4,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Icon(
-                              Icons.check_circle,
-                              size: 16,
-                              color: defaultColor,
-                            ),
-                          ],
-                        ),
-                        Text(
-                          'November 10, 2022 at 08:21 pm',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                height: 1.4,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.more_horiz,
-                      size: 16,
-                    ),
-                  ),
-                ],
-              ), // **Circle Avatar And Name**
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 1.0,
-                  color: Colors.grey[300],
-                ),
-              ), // **Divider**
-              Text(
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                style: Theme.of(context).textTheme.subtitle1,
-              ), // **Post content**
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 5.0,
-                  bottom: 10.0,
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Wrap(
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomEnd,
                     children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(end: 6.0),
-                        child: SizedBox(
-                          height: 25.0,
-                          child: MaterialButton(
-                            minWidth: 1.0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: const Text(
-                              '#Software',
-                              style: TextStyle(
-                                color: defaultColor,
-                              ),
-                            ),
-                          ),
+                      const Image(
+                        image: NetworkImage(
+                          'https://image.freepik.com/free-photo/horizontal-shot-smiling-curly-haired-woman-indicates-free-space-demonstrates-place-your-advertisement-attracts-attention-sale-wears-green-turtleneck-isolated-vibrant-pink-wall_273609-42770.jpg',
                         ),
+                        fit: BoxFit.cover,
+                        height: 200.0,
+                        width: double.infinity,
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.only(end: 6.0),
-                        child: SizedBox(
-                          height: 25.0,
-                          child: MaterialButton(
-                            minWidth: 1.0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: const Text(
-                              '#Flutter',
-                              style: TextStyle(
-                                color: defaultColor,
-                              ),
-                            ),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'communicate with friends',
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ), //  **Tags
-              Container(
-                width: double.infinity,
-                height: 140.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.0),
-                  image: const DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      'https://img.freepik.com/premium-photo/emotional-cheerful-curly-haired-woman-has-online-conversation-stares-impressed-smartphone-front-camera-applies-beauty-patches-wears-bathhat-sunglasses-t-shirt-isolated-pink-background_273609-62723.jpg?size=626&ext=jpg&ga=GA1.2.263807918.1667467436&semt=sph',
-                    ),
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => buildPostItem(SocialCubit.get(context).posts[index],context, index),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 8.0,
                   ),
+                  itemCount: SocialCubit.get(context).posts.length,
                 ),
-              ), //  **Post Image
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Row(
+                const SizedBox(
+                  height: 8.0,
+                ),
+              ],
+            ),
+          ),
+          fallback: (context) => const Center(child: CircularProgressIndicator()),
+        );
+      },
+    );
+  }
+
+  Widget buildPostItem(PostModel model, context, index) => Card(
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    elevation: 5.0,
+    margin: const EdgeInsets.symmetric(
+      horizontal: 8.0,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 25.0,
+                backgroundImage: NetworkImage(
+                  '${model.image}',
+                ),
+              ),
+              const SizedBox(
+                width: 15.0,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                IconlyBroken.heart,
-                                size: 16,
-                                color: defaultColor,
-                              ),
-                              const SizedBox(
-                                width: 5.0,
-                              ),
-                              Text(
-                                '12345',
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                            ],
+                    Row(
+                      children: [
+                        Text(
+                          '${model.name}',
+                          style: const TextStyle(
+                            height: 1.4,
                           ),
                         ),
-                      ),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
+                        const Icon(
+                          Icons.check_circle,
+                          color: defaultColor,
+                          size: 16.0,
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const Icon(
-                                IconlyBroken.moreSquare,
-                                size: 16,
-                                color: defaultColor,
-                              ),
-                              const SizedBox(
-                                width: 5.0,
-                              ),
-                              Text(
-                                '123 comment',
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                            ],
-                          ),
-                        ),
+                    Text(
+                      '${model.dateTime}',
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                        height: 1.4,
                       ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 1.0,
-                color: Colors.grey[300],
-              ),
               const SizedBox(
-                height: 15,
+                width: 15.0,
               ),
-              Row(
+              IconButton(
+                icon: const Icon(
+                  Icons.more_horiz,
+                  size: 16.0,
+                ),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 15.0,
+            ),
+            child: Container(
+              width: double.infinity,
+              height: 1.0,
+              color: Colors.grey[300],
+            ),
+          ),
+          Text(
+            '${model.text}',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 10.0,
+              top: 5.0,
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: Wrap(
                 children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          radius: 20.0,
-                          backgroundImage: NetworkImage(
-                            'https://img.freepik.com/free-photo/sign-affection-admiration-pretty-curly-woman-presses-palms-heart-being-grateful-gift-wears-yellow-t-shirt-poses-rosy-wall-says-you-are-always-my-heart-smiles-gently_273609-42551.jpg?t=st=1668102528~exp=1668103128~hmac=45306a3f573783d3a3bb4b7c414241efc8216306688c718dac844da73f5a676a',
-                          ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      end: 6.0,
+                    ),
+                    child: SizedBox(
+                      height: 25.0,
+                      child: MaterialButton(
+                        onPressed: () {},
+                        minWidth: 1.0,
+                        padding: EdgeInsets.zero,
+                        child: Text(
+                          '#software',
+                          style:
+                              Theme.of(context).textTheme.caption!.copyWith(
+                                    color: defaultColor,
+                                  ),
                         ),
-                        const SizedBox(
-                          width: 15.0,
-                        ),
-                        Text(
-                          'Write a comment ...',
-                          style: Theme.of(context).textTheme.caption!.copyWith(
-                                height: 1.4,
-                              ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        children: const [
-                          Icon(
-                            IconlyBroken.heart,
-                            size: 16,
-                            color: defaultColor,
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            'Like',
-                          ),
-                        ],
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      end: 6.0,
+                    ),
+                    child: SizedBox(
+                      height: 25.0,
+                      child: MaterialButton(
+                        onPressed: () {},
+                        minWidth: 1.0,
+                        padding: EdgeInsets.zero,
+                        child: Text(
+                          '#flutter',
+                          style:
+                              Theme.of(context).textTheme.caption!.copyWith(
+                                    color: defaultColor,
+                                  ),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
+            ),
+          ),
+          if(model.postImage != '')
+            Padding(
+              padding: const EdgeInsetsDirectional.only(
+                  top: 15.0
+              ),
+              child: Container(
+                height: 140.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    4.0,
+                  ),
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      '${model.postImage}',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 5.0,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5.0,
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            IconlyBroken.heart,
+                            size: 16.0,
+                            color: Colors.red,
+                          ),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            '${SocialCubit.get(context).likes[index]}',
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        ],
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Icon(
+                            IconlyBroken.chat,
+                            size: 16.0,
+                            color: Colors.amber,
+                          ),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            '0 comment',
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        ],
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 10.0,
+            ),
+            child: Container(
+              width: double.infinity,
+              height: 1.0,
+              color: Colors.grey[300],
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 18.0,
+                        backgroundImage: NetworkImage(
+                          '${SocialCubit.get(context).userModel!.image}',
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15.0,
+                      ),
+                      Text(
+                        'write a comment ...',
+                        style:
+                        Theme.of(context).textTheme.caption!.copyWith(),
+                      ),
+                    ],
+                  ),
+                  onTap: () {},
+                ),
+              ),
+              InkWell(
+                child: Row(
+                  children: [
+                    const Icon(
+                      IconlyBroken.heart,
+                      size: 16.0,
+                      color: Colors.red,
+                    ),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Like',
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ],
+                ),
+                onTap: ()
+                {
+                  SocialCubit.get(context).likePost(SocialCubit.get(context).postsId[index]);
+                },
+              ),
             ],
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }

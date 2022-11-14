@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
   firebase_storage: ^11.0.5
+  splash_screen_view: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+
+  assets:
+    - assets/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
