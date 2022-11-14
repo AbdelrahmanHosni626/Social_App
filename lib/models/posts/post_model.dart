@@ -1,4 +1,5 @@
-class PostModel {
+class PostModel
+{
   String? name;
   String? uId;
   String? image;
@@ -15,7 +16,8 @@ class PostModel {
     this.postImage,
   });
 
-  PostModel.fromJson(Map<String, dynamic> json) {
+  PostModel.fromJson(Map<String, dynamic> json)
+  {
     name = json['name'];
     uId = json['uId'];
     image = json['image'];
@@ -24,14 +26,15 @@ class PostModel {
     postImage = json['postImage'];
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap()
+  {
     return {
-      'name': name,
-      'uId': uId,
-      'image': image,
-      'dateTime': dateTime,
-      'text': text,
-      'postImage': postImage,
+      'name':name,
+      'uId':uId,
+      'image':image,
+      'dateTime':dateTime,
+      'text':text,
+      'postImage':postImage,
     };
   }
 }

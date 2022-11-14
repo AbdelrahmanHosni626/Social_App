@@ -75,7 +75,7 @@ class SocialLayoutScreen extends StatelessWidget {
             currentIndex: cubit.currentIndex,
             onTap: (index)
             {
-              cubit.changeBottomNav(index);
+              cubit.changeNavBar(index);
             },
             items: const [
               BottomNavigationBarItem(
