@@ -8,6 +8,7 @@ import 'package:social_app/shared/bloc_observer.dart';
 import 'package:social_app/shared/components/constants.dart';
 import 'package:social_app/shared/network/local/cache_helper.dart';
 import 'package:social_app/shared/styles/themes.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 import 'modules/login/login_screen.dart';
 
@@ -45,12 +46,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => SocialCubit()..getUserData(),
+      create: (BuildContext context) => SocialCubit()
+        ..getUserData()
+        ..getPosts(),
       child: MaterialApp(
         theme: lightTheme,
         darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,
-        home: startWidget,
+        home: SplashScreenView(
+          navigateRoute: startWidget,
+          duration: 5000,
+          imageSize: 130,
+          imageSrc: "assets/images/s.png",
+          text: "Social App",
+          textType: TextType.ColorizeAnimationText,
+          textStyle: const TextStyle(
+            fontSize: 40.0,
+          ),
+          colors:  const [
+            Colors.red,
+            Colors.deepOrange,
+            Colors.yellow,
+            Colors.redAccent,
+          ],
+        ),
       ),
     );
   }

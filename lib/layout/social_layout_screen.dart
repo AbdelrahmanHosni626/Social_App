@@ -1,6 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -8,9 +5,7 @@ import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/modules/new_post/new_post_screen.dart';
 import 'package:social_app/shared/components/components.dart';
-
 import '../modules/login/login_screen.dart';
-import '../shared/components/constants.dart';
 import '../shared/network/local/cache_helper.dart';
 
 class SocialLayoutScreen extends StatelessWidget {
@@ -80,7 +75,7 @@ class SocialLayoutScreen extends StatelessWidget {
             currentIndex: cubit.currentIndex,
             onTap: (index)
             {
-              cubit.changeNavBar(index);
+              cubit.changeBottomNav(index);
             },
             items: const [
               BottomNavigationBarItem(
